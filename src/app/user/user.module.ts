@@ -1,13 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UserComponent } from './user.component';
-import { MatIconModule } from '@angular/material/icon';
+
 
 
 @NgModule({
-  declarations: [UserComponent],
+  declarations: [],
   imports: [
-    CommonModule, MatIconModule
+    CommonModule
   ]
 })
 export class UserModule { }
