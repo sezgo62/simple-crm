@@ -1,6 +1,7 @@
 import { Component, inject } from '@angular/core';
 //import { Firestore, collectionData } from '@angular/fire/firestore';
-import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+import { Firestore, collectionData } from '@angular/fire/firestore';
+import { collection } from 'firebase/firestore';
 //import { collection } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { User } from 'src/models/user.class';
@@ -17,9 +18,10 @@ import { User } from 'src/models/user.class';
 export class DialogAddUserComponent {
 
   constructor() {
-    const itemCollection = collection(this.firestore, 'users');
-    this.item$ = collectionData(itemCollection);
+     this.itemCollection = collection(this.firestore, 'users');
+    this.item$ = collectionData(this.itemCollection);
   }
+
   user = new User();
   birthDate: any;
   itemCollection;
@@ -40,7 +42,7 @@ export class DialogAddUserComponent {
 
     this.itemCollection.add(this.user)
     .then((result: any) => {
-      console.log('hallo');
+      console.log('hallo', result);
     });
 
   }
