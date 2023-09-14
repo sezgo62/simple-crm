@@ -1,5 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+//import { Firestore, collectionData } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+//import { collection } from 'firebase/firestore';
+import { Observable } from 'rxjs';
 import { User } from 'src/models/user.class';
+//import { collection } from '@angular/fire/firestore'; // Importieren Sie collection aus '@angular/fire/firestore'
+//import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+
+
 
 @Component({
   selector: 'app-dialog-add-user',
@@ -8,25 +16,33 @@ import { User } from 'src/models/user.class';
 })
 export class DialogAddUserComponent {
 
-  constructor() { }
-
+  constructor() {
+    const itemCollection = collection(this.firestore, 'users');
+    this.item$ = collectionData(itemCollection);
+  }
   user = new User();
   birthDate: any;
+  itemCollection;
 
+  item$: Observable<any[]>;
+  firestore: Firestore = inject(Firestore);
 
 
   onNoClick() {
     //this.dialogRef.close();
-
   }
 
   saveUser() {
     debugger;
-    if(isNaN(this.user.birthDate)) {
+    if (isNaN(this.user.birthDate)) {
       this.user.birthDate = this.birthDate.getTime();
     }
-    console.log('user is', this.user);
-    debugger;
+
+    this.itemCollection.add(this.user)
+    .then((result: any) => {
+      console.log('hallo');
+    });
+
   }
 
 }
