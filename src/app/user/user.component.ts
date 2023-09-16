@@ -6,6 +6,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatDialog} from '@angular/material/dialog';
 import { DialogAddUserComponent } from '../dialog-add-user/dialog-add-user.component';
 import { User } from 'src/models/user.class';
+import { FirebaseService } from '../firebase.service';
 
 
 @Component({
@@ -17,7 +18,7 @@ export class UserComponent {
 
 user = new User();
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, public service: FirebaseService) {}
 
   positionOptions: TooltipPosition[] = ['below', 'above', 'left', 'right'];
   position = new FormControl(this.positionOptions[2]);

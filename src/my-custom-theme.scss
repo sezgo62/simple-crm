@@ -1,0 +1,11 @@
+@import '/node_modules/@angular/material/theming';
+
+// Definieren Sie Ihre benutzerdefinierten Farbpaletten
+$my-primary: mat-palette($mat-blue);
+$my-accent: mat-palette($mat-pink, A200, A100, A400);
+
+// Erstellen Sie ein Material-Theme mit Ihren Farbpaletten
+$my-theme: mat-light-theme($my-primary, $my-accent);
+
+// Anwenden Sie Ihr benutzerdefiniertes Theme auf Angular Material
+@include angular-material-theme($my-theme);

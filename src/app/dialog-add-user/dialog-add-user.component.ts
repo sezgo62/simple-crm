@@ -1,12 +1,12 @@
 import { Component, inject } from '@angular/core';
-//import { Firestore, collectionData } from '@angular/fire/firestore';
-import { Firestore, collectionData } from '@angular/fire/firestore';
-import { collection } from 'firebase/firestore';
-//import { collection } from 'firebase/firestore';
+import { initializeApp } from '@angular/fire/app';
+import { Firestore, collectionData, doc } from '@angular/fire/firestore';
+import { addDoc, collection, getFirestore } from 'firebase/firestore';
+import {  setDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { User } from 'src/models/user.class';
-//import { collection } from '@angular/fire/firestore'; // Importieren Sie collection aus '@angular/fire/firestore'
-//import { Firestore, collectionData, collection } from '@angular/fire/firestore';
+import { FirebaseService } from '../firebase.service';
 
 
 
@@ -17,34 +17,44 @@ import { User } from 'src/models/user.class';
 })
 export class DialogAddUserComponent {
 
-  constructor() {
-     this.itemCollection = collection(this.firestore, 'users');
-    this.item$ = collectionData(this.itemCollection);
+  constructor(public service: FirebaseService) {
+    this.item$ = this.itemCollection;
+    //this.service.initializeFirebase();
   }
 
   user = new User();
   birthDate: any;
-  itemCollection;
-
+  progressBar = false;
+  //db;
   item$: Observable<any[]>;
-  firestore: Firestore = inject(Firestore);
-
+  //firestore: Firestore = inject(Firestore);
+  itemCollection;
 
   onNoClick() {
     //this.dialogRef.close();
   }
 
-  saveUser() {
+  async saveUser() {
+    this.progressBar = true;
+
     debugger;
     if (isNaN(this.user.birthDate)) {
       this.user.birthDate = this.birthDate.getTime();
     }
 
-    this.itemCollection.add(this.user)
-    .then((result: any) => {
-      console.log('hallo', result);
-    });
+  
 
+    const app = initializeApp(environment.firebase);
+
+
+    this.service.db = getFirestore(this.service.app);
+
+    //setDoc(addDoc(this.itemCollection), this.user);//Mit dieser Zeile fügen wir dem collection etwas neues hinzu
+
+    await addDoc(collection(this.service.db, 'users'), 
+    this.user.toJson());
+    console.log(this.service.db);
+    
+    
   }
-
 }
