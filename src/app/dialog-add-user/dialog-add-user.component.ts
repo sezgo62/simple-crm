@@ -6,7 +6,7 @@ import {  setDoc } from 'firebase/firestore';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/models/user.class';
-import { FirebaseService } from '../firebase.service';
+import { FirestoreService } from '../firestore.service';
 
 
 
@@ -17,18 +17,14 @@ import { FirebaseService } from '../firebase.service';
 })
 export class DialogAddUserComponent {
 
-  constructor(public service: FirebaseService) {
-    this.item$ = this.itemCollection;
-    //this.service.initializeFirebase();
+  constructor(public service: FirestoreService) {
+   
   }
 
   user = new User();
   birthDate: any;
   progressBar = false;
-  //db;
-  item$: Observable<any[]>;
-  //firestore: Firestore = inject(Firestore);
-  itemCollection;
+  
 
   onNoClick() {
     //this.dialogRef.close();
@@ -43,18 +39,10 @@ export class DialogAddUserComponent {
     }
 
   
+let collId = 'users';
+    //let objToJson = this.user.toJson();
 
-    const app = initializeApp(environment.firebase);
-
-
-    this.service.db = getFirestore(this.service.app);
-
-    //setDoc(addDoc(this.itemCollection), this.user);//Mit dieser Zeile fügen wir dem collection etwas neues hinzu
-
-    await addDoc(collection(this.service.db, 'users'), 
-    this.user.toJson());
-    console.log(this.service.db);
-    
+this.service.addUser(collId, this.user);
     
   }
 }

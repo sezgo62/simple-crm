@@ -10,17 +10,17 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class FirebaseService {
-  item$: Observable<any[]>;
+  /*item$: Observable<any[]>;
   //firestore: Firestore = inject(Firestore);
   itemCollection;
   db: Firestore;
-  app;
+  app;*/
 
   constructor() {
-    this.app = initializeApp(environment.firebase);
+    /*this.app = initializeApp(environment.firebase);
     this.db = getFirestore(this.app);
     this.itemCollection = collection(this.db, 'users');
-    this.item$ = collectionData(this.itemCollection);
+    this.item$ = collectionData(this.itemCollection);*/
   }
 
   /*initializeFirebase() {
