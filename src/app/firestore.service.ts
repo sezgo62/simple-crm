@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, doc, collectionData, onSnapshot, addDoc, DocumentReference, updateDoc, deleteDoc, where, limit } from '@angular/fire/firestore';
 import { User } from 'src/models/user.class';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -14,10 +15,10 @@ allUsers: User[] = [];
 unsubUsers;
 
   constructor() {
-    this.unsubUsers = this.subNotesList();
+    this.unsubUsers = this.subUsersList();
   }
 
-  subNotesList() {
+  subUsersList() {
   const q = query(this.getRefUsers());
   return onSnapshot(q, (list) => { //Die onSnapshot-Methode aus dem Firebase Firestore SDK ist dazu da, um Änderungen in einer Firestore-Sammlung zu überwachen und eine Funktion auszuführen, wenn Änderungen auftreten.
     //this.normalNotes = [];
